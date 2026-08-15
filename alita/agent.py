@@ -20,6 +20,7 @@ from alita.modules.memory import MemoryModule
 from alita.modules.planning import Planner
 from alita.modules.profile import COMPANION, Profile
 from alita.tools.builtin import register_builtin_tools
+from alita.tools.knowledge import make_knowledge_tools
 
 
 class MONENGAgent:
@@ -29,6 +30,8 @@ class MONENGAgent:
         self.tools = tools if tools is not None else ToolRegistry()
         if tools is None:
             register_builtin_tools(self.tools)  # 开箱即用：默认装上内置工具
+            for t in make_knowledge_tools():
+                self.tools.register(t)
         self.profile = profile if profile is not None else COMPANION
         self.memory = memory if memory is not None else MemoryModule()
         self.planner = planner if planner is not None else Planner(self.llm)

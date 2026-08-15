@@ -1,31 +1,39 @@
 # MONENG · 陪伴型智能体
 
-从零构建陪伴型智能体系统。当前进度：**底座 ✅ → 骨架 ✅ → Profile ✅ → Memory ✅ → Planning ✅ → 循环进阶 ✅**。
+![MONENG](banner.svg)
+
+从零构建陪伴型智能体系统。当前进度：**底座 ✅ → 骨架 ✅ → 四大模块 ✅ → 循环进阶 ✅ → RAG 知识库 ✅**。
+
+> English: [README.en.md](README.en.md)
 
 ## 项目结构
 
 ```
 alita/
-├── main.py                 # 入口：多轮对话 + plan 规划模式 + 长期记忆 + 日志
-├── requirements.txt        # requests + python-dotenv
-├── .env.example            # 配置模板
-├── memory.json             # 长期记忆（运行后自动生成）
-├── README.md
+├── main.py                 # 入口：多轮对话 + plan 规划模式
+├── demo.py                 # 演示脚本（4 场景，截图做作品集）
+├── banner.svg              # 封面图
+├── RESUME.md               # 简历项目描述
+├── requirements.txt
+├── .env.example            # 配置模板（复制为 .env 填密钥）
+├── memory.json             # 长期记忆（运行时自动生成）
+├── docs/                   # 把 .txt/.md 文档放这里，启用知识库检索
 └── alita/
     ├── __init__.py
     ├── config.py           # 单一配置入口 + 日志
-    ├── agent.py            # ★ MONENGAgent：组合引擎+会话+画像+记忆+规划
+    ├── agent.py            # ★ MONENGAgent：引擎+会话+画像+记忆+规划
     ├── core/
     │   ├── llm.py          # LLM 客户端（chat + stream）
     │   ├── tools.py        # 工具结构 + 注册表
-    │   ├── session.py      # 短期记忆（多轮历史 + 自动裁剪）
-    │   └── agent.py        # ★ ReActAgent 引擎（无状态循环）
+    │   ├── session.py      # 短期记忆
+    │   └── agent.py        # ★ ReActAgent 引擎
     ├── modules/
     │   ├── profile.py      # ★ Profile 画像
     │   ├── memory.py       # ★ Memory 长期记忆
     │   └── planning.py     # ★ Planning 任务拆解 + 反思
     └── tools/
-        └── builtin.py      # 内置工具：计算/时间/天气/读文件/搜索/抓网页
+        ├── builtin.py      # 内置工具
+        └── knowledge.py    # ★ RAG 知识库检索
 ```
 
 ## 快速开始
@@ -33,7 +41,8 @@ alita/
 ```bash
 pip install -r requirements.txt
 copy .env.example .env        # 编辑 .env 填入 LLM_API_KEY
-python main.py
+python main.py                # 交互对话
+python demo.py                # 4 场景演示（截图用）
 ```
 
 ## 两大模式
@@ -43,36 +52,34 @@ python main.py
 | 对话 | 直接输入 | ReAct | 闲聊、简单问答、单步任务 |
 | 规划 | `plan <任务>` | Plan-and-Execute + Reflexion | 复杂多步任务 |
 
-```
-你：北京现在天气怎么样？              # 对话模式
-你：plan 帮我做一个北京三日游攻略       # 规划模式：先列计划 → 逐步执行 → 反思改进
-```
+## 核心能力
 
-## 核心循环三层进阶
+- **ReAct 循环**：Thought → Action → Observation，手写引擎
+- **三层记忆**：短期（会话）/ 长期（JSON 持久化）/ 工作（执行草稿）
+- **Plan-and-Execute + Reflexion**：拆解 → 执行 → 反思改进
+- **RAG 知识库**：把文档放进 `docs/`，MONENG 即可检索回答（`search_docs` 工具）
 
-```
-ReAct                  → 每轮「想→做→看」，直到能回答
-Plan-and-Execute       → 先拆解任务成步骤，再逐步执行
-+ Reflexion            → 执行后评估，不足就反思改进再执行
-```
+## 9 个工具
+
+`calculator` 计算 · `current_time` 时间 · `get_weather` 天气 · `read_file` 读文件 · `search_web` 联网搜索 · `get_http` 抓网页 · `save_memory` 记记忆 · `recall_memory` 忆记忆 · `search_docs` 知识库检索
 
 ## 四大模块
 
-| 模块 | 状态 | 关键文件 | 职责 |
-|------|------|----------|------|
+| 模块 | 状态 | 文件 | 职责 |
+|------|------|------|------|
 | Profile 画像 | ✅ | `modules/profile.py` | 决定 MONENG 是谁 |
 | Memory 记忆 | ✅ | `modules/memory.py` | 三层记忆，长期记忆持久化 |
 | Planning 规划 | ✅ | `modules/planning.py` | 任务拆解 + 反思 |
-| Action 行动 | ✅ | `core/tools.py` + `tools/builtin.py` | 6 个内置工具 + 2 个记忆工具 |
+| Action 行动 | ✅ | `core/tools.py` + `tools/` | 9 个工具 + RAG 检索 |
 
-## 架构思想：模块往 prompt 里「注入」内容
+## 架构思想
 
-system prompt = **人设段** + **记忆段** + **能力段(ReAct格式)** + **工具清单**。
+system prompt = **人设段** + **记忆段** + **能力段(ReAct)** + **工具清单**
 
-每个模块只负责注入自己那一段，互不依赖，各自独立开发、独立替换。
+每个模块只注入自己那一段，互不依赖、独立替换。
 
-## 怎么改人设 / 记忆 / 规划
+## 升级方向
 
-- 人设：编辑 `alita/modules/profile.py`，改 `COMPANION` / `PRO_ASSISTANT` 字段或新增预设；
-- 记忆：目前是关键词检索，升级成向量检索可换 `embedding + ChromaDB`；
-- 规划：`Planner.make_plan` 的 prompt 可调拆解粒度，`critique` 可调反思严格度。
+- 记忆检索 → 向量检索（embedding + ChromaDB）
+- 知识库检索 → 向量语义匹配
+- 加更多工具（发送邮件、操作数据库等）
