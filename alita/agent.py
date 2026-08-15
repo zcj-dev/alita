@@ -1,4 +1,4 @@
-"""ALITAAgent：有状态的陪伴型智能体（完整版）。
+"""MONENGAgent：有状态的陪伴型智能体（完整版）。
 
 把五样东西组合起来：
 - ReActAgent（无状态循环引擎）负责「想-做-看」
@@ -22,7 +22,7 @@ from alita.modules.profile import COMPANION, Profile
 from alita.tools.builtin import register_builtin_tools
 
 
-class ALITAAgent:
+class MONENGAgent:
     def __init__(self, llm=None, tools=None, profile=None, memory=None,
                  planner=None, verbose=True):
         self.llm = llm if llm is not None else LLMClient()

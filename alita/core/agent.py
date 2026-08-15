@@ -1,4 +1,4 @@
-"""ReAct 智能体循环 —— ALITA 的「发动机」。
+"""ReAct 智能体循环 —— MONENG 的「发动机」。
 
 ReAct = Reasoning(推理) + Acting(行动)。
 每一轮：Thought(想) → Action(做) → Observation(看结果)，循环直到给出 Final Answer。
@@ -19,7 +19,7 @@ from alita.core.tools import ToolRegistry
 logger = logging.getLogger("alita.react")
 
 
-# persona / memory 占位符由 ALITAAgent 用各模块的 render() 填进去
+# persona / memory 占位符由 MONENGAgent 用各模块的 render() 填进去
 SYSTEM_TEMPLATE = """{persona}
 
 {memory}

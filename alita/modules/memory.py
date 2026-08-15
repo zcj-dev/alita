@@ -1,4 +1,4 @@
-"""Memory 记忆模块 —— 让 ALITA「认识你」。
+"""Memory 记忆模块 —— 让 MONENG「认识你」。
 
 四大模块里的第二个。记忆分三层：
 - 短期记忆：当前对话的上下文（由 core/session.py 的 Session 负责）

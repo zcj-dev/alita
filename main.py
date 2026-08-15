@@ -1,4 +1,4 @@
-"""ALITA 启动入口：命令行交互式对话。
+"""MONENG 启动入口：命令行交互式对话。
 
 运行方式：
     python main.py
@@ -16,13 +16,13 @@ try:
 except Exception:
     pass
 
-from alita.agent import ALITAAgent
+from alita.agent import MONENGAgent
 from alita.config import Config, setup_logging
 from alita.modules.profile import COMPANION, PRO_ASSISTANT
 
 
 def choose_profile():
-    print("\n选择 ALITA 的人设：")
+    print("\n选择 MONENG 的人设：")
     print("  1. 温柔陪伴型（默认）—— 像朋友，有温度")
     print("  2. 专业助手型 —— 简洁高效，直奔主题")
     choice = input("  输入 1/2，直接回车用默认：").strip()
@@ -33,10 +33,10 @@ def main():
     setup_logging()
 
     profile = choose_profile()
-    agent = ALITAAgent(profile=profile)
+    agent = MONENGAgent(profile=profile)
 
     print("=" * 56)
-    print(f"   ALITA · {profile.name} 已上线")
+    print(f"   MONENG · {profile.name} 已上线")
     print(f"   风格：{profile.tone[:24]}……")
     print(f"   模型：{Config.LLM_MODEL}")
     print(f"   工具：{', '.join(agent.tools._tools.keys())}")
@@ -52,7 +52,7 @@ def main():
         low = question.lower()
 
         if low in ("quit", "exit", "退出"):
-            print("再见，ALITA 下线。")
+            print("再见，MONENG 下线。")
             break
         if low in ("reset", "清空", "重置"):
             agent.reset()
@@ -69,11 +69,11 @@ def main():
                 print("用法：plan <任务描述>，例如 plan 帮我做一个北京三日游攻略")
                 continue
             answer = agent.solve(task)
-            print(f"\nALITA：{answer}")
+            print(f"\nMONENG：{answer}")
             continue
 
         answer = agent.chat(question)
-        print(f"\nALITA：{answer}")
+        print(f"\nMONENG：{answer}")
 
 
 if __name__ == "__main__":

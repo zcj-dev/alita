@@ -15,7 +15,7 @@ except ImportError:
 
 
 class Config:
-    """ALITA 运行配置。"""
+    """MONENG 运行配置。"""
 
     # —— 大模型 ——
     LLM_BASE_URL = os.getenv("LLM_BASE_URL", "https://api.groq.com/openai/v1")

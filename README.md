@@ -1,4 +1,4 @@
-# ALITA · 陪伴型智能体
+# MONENG · 陪伴型智能体
 
 从零构建陪伴型智能体系统。当前进度：**底座 ✅ → 骨架 ✅ → Profile ✅ → Memory ✅ → Planning ✅ → 循环进阶 ✅**。
 
@@ -14,7 +14,7 @@ alita/
 └── alita/
     ├── __init__.py
     ├── config.py           # 单一配置入口 + 日志
-    ├── agent.py            # ★ ALITAAgent：组合引擎+会话+画像+记忆+规划
+    ├── agent.py            # ★ MONENGAgent：组合引擎+会话+画像+记忆+规划
     ├── core/
     │   ├── llm.py          # LLM 客户端（chat + stream）
     │   ├── tools.py        # 工具结构 + 注册表
@@ -60,7 +60,7 @@ Plan-and-Execute       → 先拆解任务成步骤，再逐步执行
 
 | 模块 | 状态 | 关键文件 | 职责 |
 |------|------|----------|------|
-| Profile 画像 | ✅ | `modules/profile.py` | 决定 ALITA 是谁 |
+| Profile 画像 | ✅ | `modules/profile.py` | 决定 MONENG 是谁 |
 | Memory 记忆 | ✅ | `modules/memory.py` | 三层记忆，长期记忆持久化 |
 | Planning 规划 | ✅ | `modules/planning.py` | 任务拆解 + 反思 |
 | Action 行动 | ✅ | `core/tools.py` + `tools/builtin.py` | 6 个内置工具 + 2 个记忆工具 |

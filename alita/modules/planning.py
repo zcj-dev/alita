@@ -1,10 +1,10 @@
-"""Planning 规划模块 —— 让 ALITA 面对复杂任务先列计划再动手。
+"""Planning 规划模块 —— 让 MONENG 面对复杂任务先列计划再动手。
 
 四大模块里的第三个。核心能力：
 - 任务拆解（Plan）：把复杂任务拆成 3-6 个可执行步骤
 - 反思（Reflexion）：执行后评估结果，不足就给出改进意见
 
-配合 ALITAAgent.solve() 使用，形成 Plan-and-Execute + Reflexion 进阶循环。
+配合 MONENGAgent.solve() 使用，形成 Plan-and-Execute + Reflexion 进阶循环。
 """
 import re
 
