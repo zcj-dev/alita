@@ -1,0 +1,18 @@
+# ===== 敏感信息：真实密钥绝不提交 =====
+.env
+
+# ===== 运行时生成的文件 =====
+memory.json
+alita.log
+__pycache__/
+*.py[cod]
+*.pyo
+
+# ===== Python 虚拟环境 =====
+.venv/
+venv/
+env/
+
+# ===== 系统文件 =====
+.DS_Store
+Thumbs.db
